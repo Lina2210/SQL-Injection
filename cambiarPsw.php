@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+    <title>Cambiar Contraseña</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -65,21 +65,21 @@
     </style>
 </head>
 <body>
-    <h1>Registrar Usuario</h1>
+    <h1>CAMBIAR CONTRASEÑA</h1>
     <form method="post">
-        <input type="text" name="userName" placeholder="Usuario"></input>
-        <input type="password" name="pwd" placeholder="Contraseña"></input>
-        <input type="password" name="pwd2" placeholder="Confirmar contraseña"></input>
+        <input type="password" name="pwdNew" placeholder="Nueva contraseña"></input>
+        <input type="password" name="pwdConf" placeholder="Confirmar contraseña"></input>
         <button type="submit">Enviar</button>
         <a href="dashBoard.php"> Regresar</a>
     </form>
     <?php
     session_start();
-    if(isset($_POST['userName']) && isset($_POST['pwd']) && isset($_POST['pwd2'])){
-        if($_POST['pwd'] === $_POST['pwd2']){
+    if(isset($_POST['pwdNew']) && isset($_POST['pwdConf'])){
+        
+        if($_POST['pwdNew'] === $_POST['pwdConf']){
             try {
-                $userName = $_POST['userName'];
-                $pwd = $_POST['pwd'];
+                $userName = $_SESSION['userName'];
+                $pwd = $_POST['pwdNew'];
                 $pwd_hash = hash('sha512', $pwd);
                 
                 
@@ -88,19 +88,22 @@
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                 // Utilizar consultas preparadas para evitar la inyección de SQL
-                $query = $pdo->prepare("INSERT INTO users (name, password) VALUES (?, ?);");
-                $query->execute([$userName, $pwd_hash]);
+                $query = $pdo->prepare("UPDATE users SET password = ? WHERE name = ?;");
+                $query->execute([$pwd_hash, $userName]);
 
-                echo "<h1>Usuario agregado</h1>";
+                echo "<h1>Contraseña cambiada</h1>";
 
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
         }else{
             echo "Las contraseñas no coinciden";
         }
-        
+    
+    }else{
+        echo"Error de usuario";
     }
+    
     ?>
 </body>
 </html>
