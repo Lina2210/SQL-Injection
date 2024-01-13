@@ -100,10 +100,7 @@
             echo "Las contraseñas no coinciden";
         }
     
-    }else{
-        echo"Error de usuario";
-    }
-    
+    }    
     ?>
 </body>
 </html>

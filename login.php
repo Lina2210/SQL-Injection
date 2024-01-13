@@ -55,9 +55,9 @@
 </head>
 <body>
     <h1>LOGIN</h1>
-    <form method="POST" action="dashBoard.php">
-        <input type="text" name="userName" placeholder="Usuario"></input>
-        <input type="password" name="pwd" placeholder="Contraseña"></input>
+    <form method="POST" action="">
+        <input type="text" name="userName" placeholder="Usuario" required></input>
+        <input type="password" name="pwd" placeholder="Contraseña" required></input>
         <button type="submit">Enviar</button>
     </form>
     <?php
@@ -77,7 +77,7 @@
 
             if ($row) {
                 $_SESSION['userName'] = $userName;
-                header("Location: dashboard.php");
+                header("Location: dashBoard.php");
                 exit();
             } else {
                 echo "Usuario o contraseña incorrectos";
